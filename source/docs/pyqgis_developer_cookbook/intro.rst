@@ -62,9 +62,9 @@ The screenshot above illustrates how to get the layer currently
 selected in the layer list, show its ID and optionally, if it is a
 vector layer, show the feature count.
 For interaction with the QGIS environment, there is a :data:`iface`
-variable, which is an instance of :class:`QgsInterface`. This
+variable, which is an instance of `QgisInterface <https://qgis.org/pyqgis/3.0/gui/other/QgisInterface.html>`_. This
 interface allows access to the map canvas, menus, toolbars and other
-parts of the QGIS application.
+parts of the QGIS application. 
 
 For user convenience, the following statements are executed
 when the console is started (in the future it will be possible to set
@@ -93,7 +93,7 @@ development.
 Many plugins covering various functionality have been written since
 the introduction of Python support. The plugin installer allows users
 to easily fetch, upgrade and remove Python plugins.
-See the `Python Plugin <https://plugins.qgis.org/>`_ page for more
+See the `Python Plugins <https://plugins.qgis.org/>`_ page for more
 information about plugins and plugin development.
 
 Creating plugins in Python is simple, see :ref:`developing_plugins`

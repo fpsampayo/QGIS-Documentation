@@ -13,6 +13,8 @@ Using Vector Layers
 
 This section summarizes various actions that can be done with vector layers.
 
+Most work here is based on the methods of the `QgsVectorLayer <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorLayer.html>`_ class.
+
 .. index::
   single: PyQGIS; Vector layers
 
@@ -20,7 +22,7 @@ Retrieving information about attributes
 ========================================
 
 You can retrieve information about the fields associated with a vector layer
-by calling :func:`fields` on a :class:`QgsVectorLayer` instance:
+by calling `fields <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorLayer.html#qgis.core.QgsVectorLayer.fields>`_ on a `QgsVectorLayer <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorLayer.html>`_ object:
 
 .. code-block:: python
 
@@ -37,7 +39,7 @@ Iterating over Vector Layer
 Iterating over the features in a vector layer is one of the most common tasks.
 Below is an example of the simple basic code to perform this task and showing
 some information about each feature. The ``layer`` variable is assumed to have
-a :class:`QgsVectorLayer` object.
+a `QgsVectorLayer <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorLayer.html>`_ object.
 
 .. code-block:: python
 
@@ -90,15 +92,15 @@ a :class:`QgsVectorLayer` object.
 Selecting features
 ==================
 
-In QGIS desktop, features can be selected in different ways, the user can click
+In QGIS desktop, features can be selected in different ways: the user can click
 on a feature, draw a rectangle on the map canvas or use an expression filter.
 Selected features are normally highlighted in a different color (default
 is yellow) to draw user's attention on the selection.
 
-Sometimes can be useful to programmatically select features or to change the
+Sometimes it can be useful to programmatically select features or to change the
 default color.
 
-To select all the features:
+To select all the features, the `selectAll() <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorLayer.html#qgis.core.QgsVectorLayer.selectAll>`_ method can be used:
 
 .. code-block:: python
 
@@ -106,7 +108,7 @@ To select all the features:
  layer = iface.activeLayer()
  layer.selectAll()
  
-To select using an expression:
+To select using an expression, use the `selectByExpression() <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorLayer.html#qgis.core.QgsVectorLayer.selectByExpression>` method:
 
 .. code-block:: python
 
@@ -115,8 +117,7 @@ To select using an expression:
  layer = iface.activeLayer()
  layer.selectByExpression('"Class"=\'B52\' and "Heading" > 10 and "Heading" <70', QgsVectorLayer.SetSelection)
 
-To change the selection color you can use :func:`setSelectionColor()`
-method of :class:`QgsMapCanvas` as shown in the following example:
+To change the selection color you can use `setSelectionColor() <https://qgis.org/pyqgis/3.0/gui/Map/QgsMapCanvas.html#qgis.gui.QgsMapCanvas.setSelectionColor>`_ method of `QgsMapCanvas <https://qgis.org/pyqgis/3.0/gui/Map/QgsMapCanvas.html>`_ as shown in the following example:
 
 .. code-block:: python
 
@@ -124,7 +125,7 @@ method of :class:`QgsMapCanvas` as shown in the following example:
 
 
 To add features to the selected features list for a given layer, you
-can call :func:`select()` passing to it the list of features IDs:
+can call `select() <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorLayer.html#qgis.core.QgsVectorLayer.select>`_ passing to it the list of features IDs:
 
 .. code-block:: python
 
@@ -164,8 +165,8 @@ For example, to get the first attribute:
 Iterating over selected features
 --------------------------------
 
-if you only need selected features, you can use the :func:`selectedFeatures`
-method from vector layer:
+If you only need selected features, you can use the `selectedFeatures() <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorLayer.html#qgis.core.QgsVectorLayer.selectedFeatures>`_
+method from the vector layer:
 
 .. code-block:: python
 
@@ -179,8 +180,8 @@ Iterating over a subset of features
 -----------------------------------
 
 If you want to iterate over a given subset of features in a layer, such as
-those within a given area, you have to add a :obj:`QgsFeatureRequest` object
-to the :func:`getFeatures()` call. Here's an example:
+those within a given area, you have to add a `QgsFeatureRequest <https://qgis.org/pyqgis/3.0/core/Feature/QgsFeatureRequest.html>`_ object
+to the `getFeatures() <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorLayer.html#qgis.core.QgsVectorLayer.getFeatures>` call. Here's an example:
 
 .. code-block:: python
 
@@ -199,7 +200,7 @@ only intersecting features will be returned:
 
   request = QgsFeatureRequest().setFilterRect(areaOfInterest).setFlags(QgsFeatureRequest.ExactIntersect)
   
-With :func:`setLimit()` you can limit the number of requested features. 
+With `setLimit() <https://qgis.org/api/classQgsFeatureRequest.html#aa724a450498eeba7a783ead6b62a2e67>` you can limit the number of requested features. 
 Here's an example:
 
 .. code-block:: python
@@ -211,8 +212,7 @@ Here's an example:
 
 
 If you need an attribute-based filter instead (or in addition) of a spatial
-one like shown in the examples above, you can build an :obj:`QgsExpression`
-object and pass it to the :obj:`QgsFeatureRequest` constructor.
+one like shown in the examples above, you can build an `QgsExpression <https://qgis.org/pyqgis/3.0/core/Expression/QgsExpression.html>`_ object and pass it to the `QgsFeatureRequest <https://qgis.org/pyqgis/3.0/core/Feature/QgsFeatureRequest.html>`_ constructor.
 Here's an example:
 
 .. code-block:: python
@@ -223,7 +223,7 @@ Here's an example:
   request = QgsFeatureRequest(exp)
 
 
-See :ref:`expressions` for the details about the syntax supported by :class:`QgsExpression`.
+See :ref:`expressions` for the details about the syntax supported by `QgsExpression <https://qgis.org/pyqgis/3.0/core/Expression/QgsExpression.html>`_.
 
 The request can be used to define the data retrieved for each feature, so the
 iterator returns all features, but returns partial data for each of them.
@@ -266,7 +266,7 @@ to find out what set of functionality is supported
 
 For a list of all available capabilities, please refer to the
 `API Documentation of QgsVectorDataProvider
-<https://qgis.org/pyqgis/master/core/Vector/QgsVectorDataProvider.html>`_
+<https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorDataProvider.html>`_
 
 To print layer's capabilities textual description in a comma separated list you
 can use :func:`capabilitiesString` as in the following example:
@@ -305,13 +305,12 @@ explains how to do :ref:`modifications with editing buffer <editing-buffer>`.
 Add Features
 ------------
 
-Create some :class:`QgsFeature` instances and pass a list of them to provider's
-:func:`addFeatures` method. It will return two values: result (true/false) and
+Create some `QgsFeature <https://qgis.org/pyqgis/3.0/core/Feature/QgsFeature.html>`_ instances and pass a list of them to provider's
+`addFeatures <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorDataProvider.html#qgis.core.QgsVectorDataProvider.addFeatures>`_ method. It will return two values: result (true/false) and
 list of added features (their ID is set by the data store).
 
-To set up the attributes you can either initialize the feature passing a
-:class:`QgsFields` instance or call :func:`initAttributes` passing
-the number of fields you want to be added.
+To set up the attributes of the feature, you can either initialize the feature passing a
+`QgsFields <https://qgis.org/pyqgis/3.0/core/other/QgsFields.html>`_ object (you can obtain that from the `fields() <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorLayer.html#qgis.core.QgsVectorLayer.fields>`_ method of the vector layer) or call `initAttributes() <https://qgis.org/pyqgis/3.0/core/Feature/QgsFeature.html#qgis.core.QgsFeature.initAttributes>`_ passing the number of fields you want to be added.
 
 .. code-block:: python
 
@@ -321,14 +320,14 @@ the number of fields you want to be added.
       # Or set a single attribute by key or by index:
       feat.setAttribute('name', 'hello')
       feat.setAttribute(0, 'hello')
-      feat.setGeometry(QgsGeometry.fromPoint(QgsPoint(123, 456)))
+      feat.setGeometry(QgsGeometry.fromPointXY(QgsPointXY(123, 456)))
       (res, outFeats) = layer.dataProvider().addFeatures([feat])
 
 
 Delete Features
 ---------------
 
-To delete some features, just provide a list of their feature IDs
+To delete some features, just provide a list of their feature IDs.
 
 .. code-block:: python
 
@@ -340,7 +339,7 @@ Modify Features
 
 It is possible to either change feature's geometry or to change some attributes.
 The following example first changes values of attributes with index 0 and 1,
-then it changes the feature's geometry
+then it changes the feature's geometry.
 
 .. code-block:: python
 
@@ -351,21 +350,15 @@ then it changes the feature's geometry
       layer.dataProvider().changeAttributeValues({ fid : attrs })
 
   if caps & QgsVectorDataProvider.ChangeGeometries:
-      geom = QgsGeometry.fromPoint(QgsPoint(111,222))
+      geom = QgsGeometry.fromPointXY(QgsPointXY(111,222))
       layer.dataProvider().changeGeometryValues({ fid : geom })
 
 
 .. tip:: **Favor QgsVectorLayerEditUtils class for geometry-only edits**
 
     If you only need to change geometries, you might consider using
-    the :class:`QgsVectorLayerEditUtils` which provides some of useful
-    methods to edit geometries (translate, insert or move vertex etc.).
-
-.. tip:: **Directly save changes using** ``with`` **based command**
-
-    Using ``with edit(layer):`` the changes will be commited automatically
-    calling :func:`commitChanges()` at the end. If any exception occurs, it will
-    :func:`rollBack()` all the changes. See :ref:`editing-buffer`.
+    the `QgsVectorLayerEditUtils <https://qgis.org/pyqgis/3.20/core/Vector/QgsVectorLayerEditUtils.html>`_ which provides some useful
+    methods to edit geometries (translate, insert or move vertex, etc.).
 
 .. _editing-buffer:
 
@@ -374,18 +367,25 @@ Modifying Vector Layers with an Editing Buffer
 
 When editing vectors within QGIS application, you have to first start editing
 mode for a particular layer, then do some modifications and finally commit (or
-rollback) the changes. All the changes you do are not written until you commit
+rollback) the changes. All the changes you make are not written until you commit
 them --- they stay in layer's in-memory editing buffer. It is possible to use
 this functionality also programmatically --- it is just another method for
 vector layer editing that complements the direct usage of data providers. Use
 this option when providing some GUI tools for vector layer editing, since this
 will allow user to decide whether to commit/rollback and allows the usage of
-undo/redo. When committing changes, all changes from the editing buffer are
+undo/redo. When changes are commited, all changes from the editing buffer are
 saved to data provider.
 
-To find out whether a layer is in editing mode, use :func:`isEditable` --- the
-editing functions work only when the editing mode is turned on. Usage of
-editing functions
+The methods are similar to the ones we have seen in the provider, but they are 
+called on the `QgsVectorLayer <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorLayer.html>`_
+object instead. 
+
+For these methods to work, the layer must be in editing mode. To start the editing mode, 
+use the is `startEditing() <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorLayer.html#qgis.core.QgsVectorLayer.startEditing>`_ method. To stop editing, use the `commitChanges() <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorLayer.html#qgis.core.QgsVectorLayer.commitChanges>`_ or `rollBack() <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorLayer.html#qgis.core.QgsVectorLayer.rollBack`_ methods. The first one will commit all your changes to the data source, while the second one will discard them and will not modify the data source at all.
+
+To find out whether a layer is in editing mode, use the `isEditable <https://qgis.org/pyqgis/3.0/core/Vector/QgsVectorLayer.html#qgis.core.QgsVectorLayer.isEditable>`_ method.
+
+Here you have some examples that demonstrate how to use these editing methods.
 
 .. code-block:: python
 
@@ -409,7 +409,9 @@ editing functions
 In order to make undo/redo work properly, the above mentioned calls have to be
 wrapped into undo commands. (If you do not care about undo/redo and want to
 have the changes stored immediately, then you will have easier work by
-:ref:`editing with data provider <editing>`.) How to use the undo functionality
+:ref:`editing with data provider <editing>`.) 
+
+Here is how you can use the the undo functionality:
 
 .. code-block:: python
 
@@ -425,17 +427,14 @@ have the changes stored immediately, then you will have easier work by
 
   layer.endEditCommand()
 
-The :func:`beginEditCommand` will create an internal "active" command and will
+The :func:`beginEditCommand` method will create an internal "active" command and will
 record subsequent changes in vector layer. With the call to :func:`endEditCommand`
 the command is pushed onto the undo stack and the user will be able to undo/redo
 it from GUI. In case something went wrong while doing the changes, the
 :func:`destroyEditCommand` method will remove the command and rollback all
 changes done while this command was active.
 
-To start editing mode, there is :func:`startEditing()` method, to stop editing
-there are :func:`commitChanges()` and :func:`rollBack()` --- however normally
-you should not need these methods and leave this functionality to be triggered
-by the user.
+
 
 You can also use the :code:`with edit(layer)`-statement to wrap commit and rollback into
 a more semantic code block as shown in the example below:
@@ -451,7 +450,7 @@ a more semantic code block as shown in the example below:
 This will automatically call :func:`commitChanges()` in the end.
 If any exception occurs, it will :func:`rollBack()` all the changes.
 In case a problem is encountered within :func:`commitChanges()` (when the method
-returns False) a :class:`QgsEditError` exception will be raised.
+returns False) a `QgsEditError <https://qgis.org/pyqgis/3.0/core/Edit/QgsEditError.html>`_ exception will be raised.
 
 Adding and Removing Fields
 --------------------------
@@ -477,6 +476,12 @@ to be updated because the changes are not automatically propagated.
 .. code-block:: python
 
  layer.updateFields()
+
+.. tip:: **Directly save changes using** ``with`` **based command**
+
+    Using ``with edit(layer):`` the changes will be commited automatically
+    calling :func:`commitChanges()` at the end. If any exception occurs, it will
+    :func:`rollBack()` all the changes. See :ref:`editing-buffer`.
 
 
 .. index:: Spatial index
