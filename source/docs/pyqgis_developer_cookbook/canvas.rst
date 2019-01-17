@@ -194,8 +194,8 @@ Rubber Bands and Vertex Markers
 To show some additional data on top of the map in canvas, use map canvas items.
 It is possible to create custom canvas item classes (covered below), however
 there are two useful canvas item classes for convenience:
-:class:`QgsRubberBand` for drawing polylines or polygons, and
-:class:`QgsVertexMarker` for drawing points. They both work with map
+`QgsRubberBand <https://qgis.org/pyqgis/3.0/gui/other/QgsRubberBand.html>`_ for drawing polylines or polygons, and
+`QgsVertexMarker <https://qgis.org/pyqgis/3.0/gui/other/QgsVertexMarker.html>`_ for drawing points. They both work with map
 coordinates, so the shape is moved/scaled automatically when the canvas is
 being panned or zoomed.
 
@@ -228,7 +228,7 @@ width
   r.setWidth(3)
 
 The canvas items are bound to the canvas scene. To temporarily hide them (and
-show again, use the :func:`hide` and :func:`show` combo. To completely remove
+show them again), use the :func:`hide` and :func:`show` combo. To completely remove
 the item, you have to remove it from the scene of the canvas
 
 .. code-block:: python
@@ -240,9 +240,10 @@ would just delete the reference and the object will still exist as it is owned
 by the canvas)
 
 Rubber band can be also used for drawing points, however
-:class:`QgsVertexMarker` class is better suited for this
-(:class:`QgsRubberBand` would only draw a rectangle around the desired point).
-How to use the vertex marker
+`QgsVertexMarker <https://qgis.org/pyqgis/3.0/gui/other/QgsVertexMarker.html>`_ class is better suited for this
+(`QgsRubberBand <https://qgis.org/pyqgis/3.0/gui/other/QgsRubberBand.html>`_` would only draw a rectangle around the desired point).
+
+Here's how to use the vertex marker:
 
 .. code-block:: python
 
@@ -259,8 +260,8 @@ icon type, size, color and pen width
   m.setIconType(QgsVertexMarker.ICON_BOX) # or ICON_CROSS, ICON_X
   m.setPenWidth(3)
 
-For temporary hiding of vertex markers and removing them from canvas, the same
-applies as for the rubber bands.
+For temporary hiding of vertex markers and removing them from canvas, use the same methods
+as for rubber bands.
 
 .. index:: Map canvas; Custom map tools
 
@@ -270,8 +271,8 @@ Writing Custom Map Tools
 You can write your custom tools, to implement a custom behavior to actions
 performed by users on the canvas.
 
-Map tools should inherit from the :class:`QgsMapTool` class or any derived
-class, and selected as active tools in the canvas using the :func:`setMapTool`
+Map tools should inherit from the `QgsMapTool <https://qgis.org/pyqgis/3.0/gui/Map/QgsMapTool.html>`_, class or any derived
+class, and selected as active tools in the canvas using the `setMapTool() <https://qgis.org/pyqgis/3.0/gui/Map/QgsMapCanvas.html#qgis.gui.QgsMapCanvas.setMapTool>`_
 method as we have already seen.
 
 Here is an example of a map tool that allows to define a rectangular extent by
@@ -339,8 +340,8 @@ described before to show the selected rectangle as it is being defined.
         return QgsRectangle(self.startPoint, self.endPoint)
 
     def deactivate(self):
-        super(RectangleMapTool, self).deactivate()
-        self.emit(SIGNAL("deactivated()"))
+        QgsMapTool.deactivate(self)
+        self.deactivated.emit()
 
 .. index:: Map canvas; Custom canvas items
 
