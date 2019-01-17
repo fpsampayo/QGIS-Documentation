@@ -23,7 +23,7 @@ there are tools for panning, zooming, identifying layers, measuring, vector
 editing and others. Similar to other graphics programs, there is always one
 tool active and the user can switch between the available tools.
 
-Map canvas is implemented as :class:`QgsMapCanvas` class in :mod:`qgis.gui`
+Map canvas is implemented as `QgsMapCanvas <https://qgis.org/pyqgis/3.0/gui/Map/QgsMapCanvas.html>`_ class in :mod:`qgis.gui`
 module. The implementation is based on the Qt Graphics View framework.
 This framework generally provides a surface and a view where custom graphics
 items are placed and user can interact with them.  We will assume that you are
@@ -33,15 +33,15 @@ and items. If not, please make sure to read the `overview of the framework
 
 Whenever the map has been panned, zoomed in/out (or some other action triggers
 a refresh), the map is rendered again within the current extent. The layers are
-rendered to an image (using :class:`QgsMapRendererJob` class) and that image is
-then displayed in the canvas. The :class:`QgsMapCanvas` class also controls refreshing
+rendered to an image (using `QgsMapRendererJob <https://qgis.org/pyqgis/3.0/gui/Map/QgsMapRendererJob.html>`_ class) and that image is
+then displayed in the canvas. The `QgsMapCanvas <https://qgis.org/pyqgis/3.0/gui/Map/QgsMapCanvas.html>`_  class also controls refreshing
 of the rendered map. Besides this item which acts as a background, there may be
 more **map canvas items**.
 Typical map canvas items are rubber bands (used for measuring, vector editing
 etc.) or vertex markers. The canvas items are usually used to give some visual
 feedback for map tools, for example, when creating a new polygon, the map tool
 creates a rubber band canvas item that shows the current shape of the polygon.
-All map canvas items are subclasses of :class:`QgsMapCanvasItem` which adds
+All map canvas items are subclasses of `QgsMapCanvasItem <https://qgis.org/pyqgis/3.0/gui/Map/QgsMapCanvasItem.html>`_  which adds
 some more functionality to the basic ``QGraphicsItem`` objects.
 
 .. index:: map canvas; architecture
@@ -85,7 +85,7 @@ set white background and enable anti-aliasing for smooth rendering
 ``Qt.white`` is one of the predefined ``QColor`` instances.)
 
 Now it is time to add some map layers. We will first open a layer and add it to
-the map layer registry. Then we will set the canvas extent and set the list of
+the current project. Then we will set the canvas extent and set the list of
 layers for canvas
 
 .. code-block:: python
@@ -113,18 +113,18 @@ Using Map Tools with Canvas
 
 The following example constructs a window that contains a map canvas and basic
 map tools for map panning and zooming. Actions are created for activation of
-each tool: panning is done with :class:`QgsMapToolPan`, zooming in/out with a
-pair of :class:`QgsMapToolZoom` instances. The actions are set as checkable and
+each tool: panning is done with `QgsMapToolPan <https://qgis.org/pyqgis/3.0/gui/Map/QgsMapToolPan.html>`_, zooming in/out with a
+pair of `QgsMapToolZoom <https://qgis.org/pyqgis/3.0/gui/Map/QgsMapToolZoom.html>`_ instances. The actions are set as checkable and
 later assigned to the tools to allow automatic handling of checked/unchecked
 state of the actions -- when a map tool gets activated, its action is marked as
 selected and the action of the previous map tool is deselected. The map tools
-are activated using :func:`setMapTool` method.
+are activated using `setMapTool() <https://qgis.org/pyqgis/3.0/gui/Map/QgsMapCanvas.html#qgis.gui.QgsMapCanvas.setMapTool>`_ method.
 
 .. code-block:: python
 
   from qgis.gui import *
   from qgis.PyQt.QtGui import QAction
-  from qgis.PyQt.QtCore import SIGNAL, Qt, QString
+  from qgis.PyQt.QtCore import Qt
   from qgis.PyQt.QtWidgets import QMainWindow
 
   class MyWnd(QMainWindow):
@@ -176,20 +176,15 @@ are activated using :func:`setMapTool` method.
           self.canvas.setMapTool(self.toolPan)
 
 
-You can put the above code to a file, e.g. :file:`mywnd.py` and try it out in
-Python console within QGIS. This code will put the currently selected layer
-into newly created canvas
+You can try the above code in the Python console editor. To invoke the canvas window, 
+add also the following lines to instantiate the ``MyWnd``class. They will put the currently 
+selected layer into the newly created canvas
 
 .. code-block:: python
 
   import mywnd
-  w = mywnd.MyWnd(qgis.utils.iface.activeLayer())
+  w = mywnd.MyWnd(iface.activeLayer())
   w.show()
-
-Just make sure that the :file:`mywnd.py` file is located within Python search
-path (``sys.path``). If it isn't, you can simply add it: ``sys.path.append(
-'/my/path')`` --- otherwise the import statement will fail, not finding the
-module.
 
 .. index:: Map canvas; Rubber bands, Map canvas; Vertex markers
 

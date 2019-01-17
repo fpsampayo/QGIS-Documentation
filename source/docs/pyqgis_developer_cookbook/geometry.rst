@@ -17,7 +17,7 @@ Geometry Handling
 
 Points, linestrings and polygons that represent a spatial feature are commonly
 referred to as geometries. In QGIS they are represented with the
-:class:`QgsGeometry` class.
+`QgsGeometry <https://qgis.org/pyqgis/3.0/core/Geometry/QgsGeometry.html>`_ class.
 
 Sometimes one geometry is actually a collection of simple (single-part)
 geometries. Such a geometry is called a multi-part geometry. If it contains
@@ -49,8 +49,8 @@ There are several options for creating a geometry:
     gPolygon = QgsGeometry.fromPolygonXY([[QgsPointXY(1, 1), QgsPointXY(2, 2),
                                         QgsPointXY(2, 1)]])
 
-  Coordinates are given using :class:`QgsPoint` class or :class:`QgsPointXY`
-  class. The difference between these classes is that :class:`QgsPoint`
+  Coordinates are given using `QgsPoint <https://qgis.org/pyqgis/3.0/core/Point/QgsPoint.html>`_ class or `QgsPointXY <https://qgis.org/pyqgis/3.0/core/Point/QgsPointXY.html>`_
+  class. The difference between these classes is that `QgsPoint <https://qgis.org/pyqgis/3.0/core/Point/QgsPoint.html>`_
   supports M and Z dimensions.
 
   Polyline (Linestring) is represented by a list of points. Polygon is
@@ -71,10 +71,10 @@ There are several options for creating a geometry:
 
   .. code-block:: python
 
-    >>> g = QgsGeometry()
-    >>> wkb = bytes.fromhex("010100000000000000000045400000000000001440")
-    >>> g.fromWkb(wkb)
-    >>> g.asWkt()
+    g = QgsGeometry()
+    wkb = bytes.fromhex("010100000000000000000045400000000000001440")
+    g.fromWkb(wkb)
+    g.asWkt()
     'Point (42 5)'
 
 
@@ -83,26 +83,26 @@ There are several options for creating a geometry:
 Access to Geometry
 ==================
 
-First, you should find out geometry type, :func:`wkbType` method is the one to
-use --- it returns a value from ``QGis.WkbType`` enumeration
+First, you should find out the geometry type. The `wkbType() <https://qgis.org/pyqgis/3.0/core/Geometry/QgsGeometry.html#qgis.core.QgsGeometry.wkbType>`_ method is the one to
+use. It returns a value from the `QgsWkbTypes.Type <https://qgis.org/pyqgis/3.0/core/Wkb/QgsWkbTypes.html>`_ enumeration
 
 .. code-block:: python
 
-  >>> gPnt.wkbType() == QGis.WKBPoint
+  >>> gPnt.wkbType() == QgsWkbTypes.Point
   True
-  >>> gLine.wkbType() == QGis.WKBLineString
+  >>> gLine.wkbType() == QgsWkbTypes.LineString
   True
-  >>> gPolygon.wkbType() == QGis.WKBPolygon
+  >>> gPolygon.wkbType() == QgsWkbTypes.Polygon
   True
-  >>> gPolygon.wkbType() == QGis.WKBMultiPolygon
+  >>> gPolygon.wkbType() == QgsWkbTypes.MultiPolygon
   False
 
-As an alternative, one can use :func:`type` method which returns a value from
-``QGis.GeometryType`` enumeration. There is also a helper function
-:func:`isMultipart` to find out whether a geometry is multipart or not.
+As an alternative, one can use `type() <https://qgis.org/pyqgis/3.0/core/Geometry/QgsGeometry.html#qgis.core.QgsGeometry.wkbType>`_ method which returns a value from
+`QgsWkbTypes.GeometryType <https://qgis.org/pyqgis/3.0/core/Wkb/QgsWkbTypes.html>`_ enumeration. There is also a helper function
+`isMultipart() <https://qgis.org/pyqgis/3.0/core/Geometry/QgsGeometry.html#qgis.core.QgsGeometry.isMultipart>`_ to find out whether a geometry is multipart or not.
 
-To extract information from geometry there are accessor functions for every
-vector type. How to use accessors
+To extract information from a geometry there are accessor functions for every
+vector type. Here's an example on how to use these accessors:
 
 .. code-block:: python
 
@@ -113,11 +113,11 @@ vector type. How to use accessors
   >>> gPolygon.asPolygon()
   [[(1, 1), (2, 2), (2, 1), (1, 1)]]
 
-.. note:: The tuples (x,y) are not real tuples, they are :class:`QgsPoint`
-   objects, the values are accessible with :func:`x` and :func:`y` methods.
+.. note:: The tuples (x,y) are not real tuples, they are `QgsPoint <https://qgis.org/pyqgis/3.0/core/Point/QgsPoint.html>`_
+   objects, the values are accessible with `x() <https://qgis.org/pyqgis/3.0/core/Point/QgsPoint.html#qgis.core.QgsPoint.x>`_ () and `y <https://qgis.org/pyqgis/3.0/core/Point/QgsPoint.html#qgis.core.QgsPoint.y>`_ methods.
 
 For multipart geometries there are similar accessor functions:
-:func:`asMultiPoint`, :func:`asMultiPolyline`, :func:`asMultiPolygon()`.
+`asMultiPoint() <https://qgis.org/pyqgis/3.0/core/Point/QgsPoint.html#qgis.core.QgsPoint.asMultipoint>`_, `asMultiPolyline() <https://qgis.org/pyqgis/3.0/core/Point/QgsPoint.html#qgis.core.QgsPoint.asMultiPolyline>`_ and `asMultiPolygon() <https://qgis.org/pyqgis/3.0/core/Point/QgsPoint.html#qgis.core.QgsPoint.asMultiPolygon>`_
 
 .. index:: Geometry; Predicates and operations
 
@@ -125,8 +125,8 @@ Geometry Predicates and Operations
 ==================================
 
 QGIS uses GEOS library for advanced geometry operations such as geometry
-predicates (:func:`contains`, :func:`intersects`, ...) and set operations
-(:func:`union`, :func:`difference`, ...). It can also compute geometric
+predicates (`contains() <https://qgis.org/pyqgis/3.0/core/Geometry/QgsGeometry.html#qgis.core.QgsGeometry.contains>`_, `intersects() <https://qgis.org/pyqgis/3.0/core/Geometry/QgsGeometry.html#qgis.core.QgsGeometry.intersects>`_, ...) and set operations
+(`combine() <https://qgis.org/pyqgis/3.0/core/Geometry/QgsGeometry.html#qgis.core.QgsGeometry.combine>`_, `difference() <https://qgis.org/pyqgis/3.0/core/Geometry/QgsGeometry.html#qgis.core.QgsGeometry.difference>`_, ...). It can also compute geometric
 properties of geometries, such as area (in the case of polygons) or lengths
 (for polygons and lines)
 
@@ -144,28 +144,22 @@ geometries.
     print("Perimeter:", geom.length())
 
 Areas and perimeters don't take CRS into account when computed using these
-methods from the :class:`QgsGeometry` class. For a more powerful area and
-distance calculation, the :class:`QgsDistanceArea` class can be used. If
-projections are turned off, calculations will be planar, otherwise they'll be
-done on the ellipsoid. 
+methods from the `QgsGeometry <https://qgis.org/pyqgis/3.0/core/other/QgsGeometry.html>`_ class. For a more powerful area and
+distance calculation, the `QgsDistanceArea <https://qgis.org/pyqgis/3.0/core/other/QgsDistanceArea.html>`_ class can be used, which can perform ellipsoid based calculations.
 
 .. code-block:: python
 
   d = QgsDistanceArea()
   d.setEllipsoid('WGS84')
-  d.setEllipsoidalMode(True)
 
-  print("distance in meters: ", d.measureLine(QgsPoint(10,10),QgsPoint(11,11)))
+  print("distance in meters: ", d.measureLine(QgsPointXY(10,10),QgsPointXY(11,11)))
 
 You can find many example of algorithms that are included in QGIS and use these
 methods to analyze and transform vector data. Here are some links to the code
 of a few of them.
 
-Additional information can be found in following sources:
-
-* Geometry transformation: `Reproject algorithm <https://raw.github.com/qgis/QGIS/release-2_18/python/plugins/processing/algs/qgis/ReprojectLayer.py>`_
-* Distance and area using the :class:`QgsDistanceArea` class: `Distance matrix algorithm <https://raw.github.com/qgis/QGIS/release-2_18/python/plugins/processing/algs/qgis/PointDistance.py>`_
-* `Multi-part to single-part algorithm <https://raw.github.com/qgis/QGIS/release-2_18/python/plugins/processing/algs/qgis/MultipartToSingleparts.py>`_
+* Distance and area using the `QgsDistanceArea <https://qgis.org/pyqgis/3.0/core/other/QgsDistanceArea.html>`_ class: `Distance matrix algorithm <https://github.com/qgis/QGIS/blob/master/python/plugins/processing/algs/qgis/PointDistance.py>`_
+* `Lines to polygons algorithm <https://github.com/qgis/QGIS/blob/master/python/plugins/processing/algs/qgis/LinesToPolygons.py>`_
 
 
 .. Substitutions definitions - AVOID EDITING PAST THIS LINE
