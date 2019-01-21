@@ -970,25 +970,24 @@ Size and width are in millimeters by default, angles are in degrees.
 Working with Symbol Layers
 ..........................
 
-As said before, symbol layers (subclasses of :class:`QgsSymbolLayer`)
+As said before, symbol layers (subclasses of `QgsSymbolLayer <https://qgis.org/pyqgis/master/core/QgsSymbolLayer.html>`_)
 determine the appearance of the features.  There are several basic symbol layer
 classes for general use. It is possible to implement new symbol layer types and
-thus arbitrarily customize how features will be rendered. The :func:`layerType`
+thus arbitrarily customize how features will be rendered. The `layerType() <https://qgis.org/pyqgis/master/core/QgsSymbolLayer.html#qgis.core.QgsSymbolLayer.layerType>`_
 method uniquely identifies the symbol layer class --- the basic and default
-ones are SimpleMarker, SimpleLine and SimpleFill symbol layers types.
+ones are ``SimpleMarker``, ``SimpleLine`` and ``SimpleFill`` symbol layers types.
 
 You can get a complete list of the types of symbol layers you can create for a
-given symbol layer class like this
+given symbol layer class with the following code:
 
 .. code-block:: python
 
-  from qgis.core import QgsSymbolLayerV2Registry
-  myRegistry = QgsSymbolLayerV2Registry.instance()
+  registry =  QgsApplication::symbolLayerRegistry().
   myMetadata = myRegistry.symbolLayerMetadata("SimpleFill")
-  for item in myRegistry.symbolLayersForType(QgsSymbolV2.Marker):
+  for item in myRegistry.symbolLayersForType(QgsSymbol.Marker):
       print(item)
 
-Output
+Output:
 
 ::
 
@@ -998,10 +997,10 @@ Output
   SvgMarker
   VectorField
 
-:class:`QgsSymbolLayerV2Registry` class manages a database of all available
+The `QgsSymbolLayerRegistry <https://qgis.org/pyqgis/master/core/QgsSymbolLayerRegistry.html>`_ class manages a database of all available
 symbol layer types.
 
-To access symbol layer data, use its :func:`properties` method that returns a
+To access symbol layer data, use its `properties() <https://qgis.org/pyqgis/master/core/QgsSymbolLayer.html#qgis.core.QgsSymbolLayer.properties>`_ method that returns a
 key-value dictionary of properties which determine the appearance. Each symbol
 layer type has a specific set of properties that it uses. Additionally, there
 are generic methods :func:`color`, :func:`size`, :func:`angle`, :func:`width`
@@ -1020,10 +1019,10 @@ radius
 
 .. code-block:: python
 
-  class FooSymbolLayer(QgsMarkerSymbolLayerV2):
+  class FooSymbolLayer(QgsMarkerSymbolLayer):
 
     def __init__(self, radius=4.0):
-        QgsMarkerSymbolLayerV2.__init__(self)
+        QgsMarkerSymbolLayer.__init__(self)
         self.radius = radius
         self.color = QColor(255,0,0)
 
